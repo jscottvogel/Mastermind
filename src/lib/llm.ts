@@ -11,6 +11,14 @@ const AnalysisSchema = z.object({
 
 export type AgentAnalysis = z.infer<typeof AnalysisSchema>;
 
+/**
+ * Analyzes the document content using the specified agent's persona.
+ * Uses Google's Gemini model via the Vercel AI SDK.
+ * 
+ * @param docContent The text content of the document to analyze.
+ * @param agent The agent whose persona will be used for analysis.
+ * @returns An AgentAnalysis object containing sentiment, suggestions, and summary.
+ */
 export async function analyzeDocumentWithAgent(docContent: string, agent: Agent): Promise<AgentAnalysis> {
     // If the document is empty, return a default state
     if (!docContent || docContent.trim().length === 0) {

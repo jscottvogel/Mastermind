@@ -1,13 +1,20 @@
+/**
+ * Agent interface defines the structure for an AI agent.
+ */
 export interface Agent {
-    id: string;
-    name: string;
-    role: string;
-    description: string;
-    avatar: string; // Emoji for now
-    color: string;
-    systemPrompt: string;
+    id: string; // Unique identifier for the agent
+    name: string; // Display name of the agent
+    role: string; // Agent's role description (e.g., "The Strict Editor")
+    description: string; // Tooltip/short description of what the agent does
+    avatar: string; // Emoji representing the agent
+    color: string; // CSS classes for color styling (background and text)
+    systemPrompt: string; // The prompt used to instruct the LLM
 }
 
+/**
+ * AGENTS is the collection of available AI agents.
+ * Each agent has a specific persona and focus area for document analysis.
+ */
 export const AGENTS: Agent[] = [
     {
         id: "critic",
