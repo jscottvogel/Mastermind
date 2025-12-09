@@ -2,8 +2,8 @@
 
 import { Agent, AGENTS } from "@/lib/agents";
 import { analyzeSession } from "@/app/actions";
-import { useState, useEffect } from "react";
-import { ExternalLink, RefreshCw, AlertCircle, Smile, Frown, Meh, Sparkles } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { ExternalLink, RefreshCw, Smile, Frown, Meh, Sparkles } from "lucide-react";
 import clsx from "clsx";
 
 interface SessionViewProps {
@@ -22,7 +22,7 @@ export function SessionView({ docId }: SessionViewProps) {
     const [loading, setLoading] = useState(false);
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-    const fetchAnalysis = async () => {
+    const fetchAnalysis = useCallback(async () => {
         setLoading(true);
         try {
             const resp = await analyzeSession(
@@ -38,13 +38,13 @@ export function SessionView({ docId }: SessionViewProps) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [docId, activeAgents]);
 
     useEffect(() => {
         fetchAnalysis();
         const interval = setInterval(fetchAnalysis, 30000);
         return () => clearInterval(interval);
-    }, [docId]);
+    }, [fetchAnalysis]);
 
     return (
         <div className="flex flex-col h-screen bg-slate-50">
@@ -150,7 +150,7 @@ export function SessionView({ docId }: SessionViewProps) {
                                     <div className="p-4 flex-1 flex flex-col">
                                         {result ? (
                                             <div className="space-y-4">
-                                                <p className="text-sm font-medium text-slate-800 italic">"{result.summary}"</p>
+                                                <p className="text-sm font-medium text-slate-800 italic">&quot;{result.summary}&quot;</p>
 
                                                 {result.suggestions.length > 0 && (
                                                     <div className="space-y-2">

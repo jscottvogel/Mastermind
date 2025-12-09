@@ -1,16 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { JWT } from "next-auth/jwt";
 
-const GOOGLE_AUTHORIZATION_URL =
-    "https://accounts.google.com/o/oauth2/v2/auth?" +
-    new URLSearchParams({
-        prompt: "consent",
-        access_type: "offline",
-        response_type: "code",
-        scope: "openid email profile https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file",
-    });
-
-async function refreshAccessToken(token: any) {
+async function refreshAccessToken(token: JWT) {
     try {
         const url =
             "https://oauth2.googleapis.com/token?" +
@@ -18,7 +10,7 @@ async function refreshAccessToken(token: any) {
                 client_id: process.env.GOOGLE_CLIENT_ID!,
                 client_secret: process.env.GOOGLE_CLIENT_SECRET!,
                 grant_type: "refresh_token",
-                refresh_token: token.refreshToken,
+                refresh_token: token.refreshToken as string,
             });
 
         const response = await fetch(url, {
@@ -78,8 +70,7 @@ export const authOptions: NextAuthOptions = {
             }
 
             // Return previous token if the access token has not expired yet
-            // @ts-ignore
-            if (Date.now() < token.accessTokenExpires) {
+            if (Date.now() < (token.accessTokenExpires as number)) {
                 return token;
             }
 
@@ -87,6 +78,7 @@ export const authOptions: NextAuthOptions = {
             return refreshAccessToken(token);
         },
         async session({ session, token }) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             session.user = token.user as any;
             session.accessToken = token.accessToken as string;
             session.error = token.error as string;
