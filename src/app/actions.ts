@@ -3,7 +3,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { createDocument, getDocument, extractTextFromDocument } from "@/lib/google";
-import { redirect } from "next/navigation";
 
 import { AGENTS } from "@/lib/agents";
 import { analyzeDocumentWithAgent } from "@/lib/llm";
@@ -36,7 +35,7 @@ export async function fetchDocumentContent(docId: string) {
         const doc = await getDocument(session.accessToken, docId);
         const text = extractTextFromDocument(doc);
         return { success: true, text, title: doc.title };
-    } catch (error) {
+    } catch {
         return { success: false, error: "Failed to fetch document" };
     }
 }
@@ -48,6 +47,7 @@ export async function analyzeSession(docId: string, activeAgentIds: string[]) {
         return { success: false, error: "Could not retrieve document" };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const results: Record<string, any> = {};
 
     const promises = activeAgentIds.map(async (agentId) => {
