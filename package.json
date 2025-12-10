@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--max-old-space-size=4096' next dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
-    "start": "NODE_OPTIONS='--max-old-space-size=4096' next start",
-    "test": "NODE_OPTIONS='--max-old-space-size=4096' jest",
+    "dev": "NODE_OPTIONS='--max-old-space-size=3072' next dev",
+    "build": "NODE_OPTIONS='--max-old-space-size=3072' next build",
+    "start": "NODE_OPTIONS='--max-old-space-size=3072' next start",
+    "test": "NODE_OPTIONS='--max-old-space-size=3072' jest",
     "test:watch": "jest --watch",
     "lint": "eslint"
   },
@@ -42,5 +42,8 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }
