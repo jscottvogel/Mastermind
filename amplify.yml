@@ -12,7 +12,10 @@ frontend:
         - npm install
     build:
       commands:
-        - env | grep -e NEXTAUTH_ -e GOOGLE_ >> .env.production
+        - echo "NEXTAUTH_SECRET=$NEXTAUTH_SECRET" >> .env.production
+        - echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env.production
+        - echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> .env.production
+        - echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
