@@ -14,6 +14,10 @@ export default function HealthPage() {
                     <li>NEXTAUTH_SECRET: {process.env.NEXTAUTH_SECRET ? 'Set' : 'MISSING'}</li>
                     <li>GOOGLE_CLIENT_ID: {process.env.GOOGLE_CLIENT_ID ? 'Set' : 'MISSING'}</li>
                 </ul>
+                <div className="mt-4">
+                    <p className="font-bold">Available Keys:</p>
+                    <pre className="text-xs overflow-auto max-h-40">{JSON.stringify(Object.keys(process.env).sort(), null, 2)}</pre>
+                </div>
             </div>
         </div>
     );

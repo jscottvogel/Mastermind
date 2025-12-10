@@ -12,6 +12,7 @@ frontend:
         - npm install
     build:
       commands:
+        - env | grep -e NEXTAUTH_ -e GOOGLE_ >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
