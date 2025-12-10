@@ -1,10 +1,12 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "esnext",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "allowImportingTsExtensions": true,
+        "noEmit": true
     },
     "include": [
         "**/*.ts"
